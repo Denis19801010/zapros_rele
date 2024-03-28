@@ -56,8 +56,18 @@ class MainApp(App):
         button_peregon.bind(on_press=self.on_peregon_press)
         layout.add_widget(button_peregon)
 
+        # Создаем кнопку "МАП" и добавляем её в контейнер
+        button_MAP = Button(text='МАП', size_hint=(None, None), size=(200, 50), background_color=(1, 1, 0, 1))
+        button_MAP.bind(on_press=self.on_MAP_press)
+        layout.add_widget(button_MAP)
+
+        # Создаем кнопку "тоннели" и добавляем её в контейнер
+        button_tonnel = Button(text='ТОННЕЛИ', size_hint=(None, None), size=(200, 50), background_color=(1, 1, 0, 1))
+        button_tonnel.bind(on_press=self.on_tonnel_press)
+        layout.add_widget(button_tonnel)
+
         # Создаем остальные кнопки и добавляем их в контейнер
-        buttons = ['МАП', 'ТОННЕЛИ', 'АППАРАТУРА', 'БЫСТРЫЙ ПОИСК']
+        buttons = ['АППАРАТУРА', 'БЫСТРЫЙ ПОИСК']
         for button_text in buttons:
             # Создаем кнопку с указанным размером и цветом
             button = Button(text=button_text, size_hint=(None, None), size=(200, 50), background_color=(1, 1, 0, 1))
@@ -119,6 +129,7 @@ class MainApp(App):
         self.sm.current = 'second'
 
         # включаем передачу от main до станций
+
     def on_tyia_press(self, instance):
         subprocess.run(["python", 'station/tyia.py'])
 
@@ -227,6 +238,93 @@ class MainApp(App):
     def on_tyia_pp1053_2_put_press(self, instance):
         subprocess.run(["python", 'peregony/tyia_pp1053_2_put.py'])
 
+    def on_MAP_press(self, instance):
+        # Создаем новый экран "FourthScreen"
+        fourth_screen = Screen(name='fourth')
+
+        # Создаем контейнер для экрана с вертикальной ориентацией
+        layout = BoxLayout(orientation='vertical')
+
+        # Создаем кнопку "1047км" и добавляем её в контейнер
+        button_1047km = Button(text='переезд 1047 км', size_hint=(None, None), size=(200, 50),
+                               pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 1, 0, 1))
+        button_1047km.bind(on_press=self.on_1047km_press)
+        layout.add_widget(button_1047km)
+
+        # Создаем кнопку "1026 км" и добавляем её в контейнер
+        button_1026km = Button(text='переезд 1026 км', size_hint=(None, None), size=(200, 50),
+                               pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 1, 0, 1))
+        button_1026km.bind(on_press=self.on_1026km_press)
+        layout.add_widget(button_1026km)
+
+        # Создаем кнопку "НАЗАД" и добавляем её в контейнер
+        button_back = Button(text='НАЗАД', size_hint=(None, None), size=(200, 50), pos_hint={'center_x': 0.5, 'y': 0},
+                             background_color=(1, 1, 0, 1))
+        button_back.bind(on_press=self.on_back_press)
+        layout.add_widget(button_back)
+
+        # Добавляем контейнер на экран "FourthScreen"
+        fourth_screen.add_widget(layout)
+
+        # Добавляем экран "FourthScreen" в менеджер экранов
+        self.sm.add_widget(fourth_screen)
+
+        # Переключаемся на экран "FourthScreen"
+        self.sm.current = 'fourth'
+
+        # включаем передачу от main до переездов
+
+    def on_1026km_press(self, instance):
+        subprocess.run(["python", 'MAP/1026km.py'])
+
+    def on_1047km_press(self, instance):
+        subprocess.run(["python", 'MAP/1047km.py'])
+
+
+
+    def on_tonnel_press(self, instance):
+        # Создаем новый экран "FifthScreen"
+        fifth_screen = Screen(name='fifth')
+
+        # Создаем контейнер для экрана с вертикальной ориентацией
+        layout = BoxLayout(orientation='vertical')
+
+        # Создаем кнопку "тоннель 1 путь" и добавляем её в контейнер
+        button_1_put = Button(text='тоннель 1 путь', size_hint=(None, None), size=(200, 50),
+                              pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 1, 0, 1))
+        button_1_put.bind(on_press=self.on_1_put_press)
+        layout.add_widget(button_1_put)
+
+        # Создаем кнопку "тоннель 2 путь" и добавляем её в контейнер
+        button_2_put = Button(text='тоннель 2 путь', size_hint=(None, None), size=(200, 50),
+                              pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 1, 0, 1))
+        button_2_put.bind(on_press=self.on_2_put_press)
+        layout.add_widget(button_2_put)
+
+        # Создаем кнопку "НАЗАД" и добавляем её в контейнер
+        button_back = Button(text='НАЗАД', size_hint=(None, None), size=(200, 50), pos_hint={'center_x': 0.5, 'y': 0},
+                             background_color=(1, 1, 0, 1))
+        button_back.bind(on_press=self.on_back_press)
+        layout.add_widget(button_back)
+
+        # Добавляем контейнер на экран "FifthScreen"
+        fifth_screen.add_widget(layout)
+
+        # Добавляем экран "FifthScreen" в менеджер экранов
+        self.sm.add_widget(fifth_screen)
+
+        # Переключаемся на экран "FifthScreen"
+        self.sm.current = 'fifth'
+
+        # включаем передачу от main до тоннелей
+
+    def on_1_put_press(self, instance):
+        subprocess.run(["python", 'tonnel/1_put.py'])
+
+
+
+    def on_2_put_press(self, instance):
+        subprocess.run(["python", 'tonnel/2_put.py'])
 
 
 if __name__ == '__main__':
