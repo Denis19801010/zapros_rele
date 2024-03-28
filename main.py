@@ -66,12 +66,17 @@ class MainApp(App):
         button_tonnel.bind(on_press=self.on_tonnel_press)
         layout.add_widget(button_tonnel)
 
-        # Создаем остальные кнопки и добавляем их в контейнер
-        buttons = ['АППАРАТУРА', 'БЫСТРЫЙ ПОИСК']
-        for button_text in buttons:
-            # Создаем кнопку с указанным размером и цветом
-            button = Button(text=button_text, size_hint=(None, None), size=(200, 50), background_color=(1, 1, 0, 1))
-            layout.add_widget(button)
+        # Создаем кнопку "АППАРАТУРА" и добавляем её в контейнер
+        button_apparatura = Button(text='АППАРАТУРА', size_hint=(None, None), size=(200, 50),
+                                   background_color=(1, 1, 0, 1))
+        button_apparatura.bind(on_press=self.on_apparatura_press)
+        layout.add_widget(button_apparatura)
+
+        # Создаем кнопку "БЫСТРЫЙ ПОИСК" и добавляем её в контейнер
+        button_quick_search = Button(text='БЫСТРЫЙ ПОИСК', size_hint=(None, None), size=(200, 50),
+                                     background_color=(1, 1, 0, 1))
+        button_quick_search.bind(on_press=self.on_quick_search_press)
+        layout.add_widget(button_quick_search)
 
         button_exit = Button(text='ВЫХОД', size_hint=(None, None), size=(200, 50), background_color=(1, 1, 0, 1))
         button_exit.bind(on_press=exit_app)
@@ -280,8 +285,6 @@ class MainApp(App):
     def on_1047km_press(self, instance):
         subprocess.run(["python", 'MAP/1047km.py'])
 
-
-
     def on_tonnel_press(self, instance):
         # Создаем новый экран "FifthScreen"
         fifth_screen = Screen(name='fifth')
@@ -321,10 +324,79 @@ class MainApp(App):
     def on_1_put_press(self, instance):
         subprocess.run(["python", 'tonnel/1_put.py'])
 
-
-
     def on_2_put_press(self, instance):
         subprocess.run(["python", 'tonnel/2_put.py'])
+
+
+
+    def on_apparatura_press(self, instance):
+        # Создаем новый экран "SixthhScreen"
+        sixth_screen = Screen(name='sixth')
+
+        # Создаем контейнер для экрана с вертикальной ориентацией
+        layout = BoxLayout(orientation='vertical')
+
+        # Создаем кнопку "АППАРАТУРА" и добавляем её в контейнер
+        button_all_apparatura = Button(text='аппаратура', size_hint=(None, None), size=(200, 50),
+                                   pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 1, 0, 1))
+        button_all_apparatura.bind(on_press=self.on_all_apparatura_press)
+        layout.add_widget(button_all_apparatura)
+
+        # Создаем кнопку "НАЗАД" и добавляем её в контейнер
+        button_back = Button(text='НАЗАД', size_hint=(None, None), size=(200, 50), pos_hint={'center_x': 0.5, 'y': 0},
+                             background_color=(1, 1, 0, 1))
+        button_back.bind(on_press=self.on_back_press)
+        layout.add_widget(button_back)
+
+        # Добавляем контейнер на экран "SixthScreen"
+        sixth_screen.add_widget(layout)
+
+        # Добавляем экран "SixthScreen" в менеджер экранов
+        self.sm.add_widget(sixth_screen)
+
+        # Переключаемся на экран "SixthScreen"
+        self.sm.current = 'sixth'
+
+        # включаем передачу от main до аппаратуры
+
+    def on_all_apparatura_press(self, instance):
+        subprocess.run(["python", 'apparatura/all_apparatura.py'])
+
+
+    def on_quick_search_press(self, instance):
+        # Создаем новый экран "SeventhScreen"
+        seventh_screen = Screen(name='seventh')
+
+        # Создаем контейнер для экрана с вертикальной ориентацией
+        layout = BoxLayout(orientation='vertical')
+
+        # Создаем кнопку "БЫСТРЫЙ ПОИСК" и добавляем её в контейнер
+        button_quick_search = Button(text='БЫСТРЫЙ ПОИСК', size_hint=(None, None), size=(200, 50),
+                                     pos_hint={'center_x': 0.5, 'center_y': 0.5}, background_color=(1, 1, 0, 1))
+        button_quick_search.bind(on_press=self.on_quick_search_press)
+        layout.add_widget(button_quick_search)
+
+        # Создаем кнопку "НАЗАД" и добавляем её в контейнер
+        button_back = Button(text='НАЗАД', size_hint=(None, None), size=(200, 50), pos_hint={'center_x': 0.5, 'y': 0},
+                             background_color=(1, 1, 0, 1))
+        button_back.bind(on_press=self.on_back_press)
+        layout.add_widget(button_back)
+
+        # Добавляем контейнер на экран "SeventhScreen"
+        seventh_screen.add_widget(layout)
+
+        # Добавляем экран "SeventhScreen" в менеджер экранов
+        self.sm.add_widget(seventh_screen)
+
+        # Переключаемся на экран "SeventhScreen"
+        self.sm.current = 'seventh'
+
+        # включаем передачу от main до аппаратуры
+
+    def on_quick_search_press(self, instance):
+
+        pass
+        subprocess.run(["python", 'apparatura/all_apparatura.py'])
 
 
 if __name__ == '__main__':
